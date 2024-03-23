@@ -16,7 +16,7 @@ usersRoute
   .route(route.ROOT)
   .get((req, res) => {
     // Headers operations
-    res.header('X-My-Name', 'ABCD');
+    // res.header('X-My-Name', 'ABCD');
     res.removeHeader('X-Powered-By');
 
     res.json(usersData);
