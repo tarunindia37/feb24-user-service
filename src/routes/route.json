@@ -1,0 +1,6 @@
+{
+    "ROOT": "/",
+    "API": "/api",
+    "WEATHER": "/weather",
+    "USERS": "/users"
+}
