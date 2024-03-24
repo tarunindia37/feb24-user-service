@@ -15,14 +15,11 @@ const usersRoute = express.Router();
 usersRoute
   .route(route.ROOT)
   .get((req, res) => {
-    // Headers operations
-    // res.header('X-My-Name', 'ABCD');
-    res.removeHeader('X-Powered-By');
-
     res.json(usersData);
   })
   .post((req, res) => {
     const { first_name, last_name, email, mobile, avatar } = req.body;
+    console.log(req.body);
     if (
       first_name &&
       isNameValid(first_name) &&
