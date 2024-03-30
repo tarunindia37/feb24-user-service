@@ -5,3 +5,4 @@ export const urlRegex = /^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/;
 export const LOGGER_PATH = 'logs/log.txt';
 export const LOGGER_FOLDER_PATH = 'logs';
 export const PUBLIC_FOLDER_PATH = 'public';
+export const UPLOADS_FOLDER_PATH = 'uploads';

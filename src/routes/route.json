@@ -3,5 +3,6 @@
     "API": "/api",
     "WEATHER": "/weather",
     "USERS": "/users",
-    "LOGS": "/logs"
+    "LOGS": "/logs",
+    "UPLOADS": "/uploads"
 }

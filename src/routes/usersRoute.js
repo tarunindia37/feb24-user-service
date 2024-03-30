@@ -9,6 +9,8 @@ import {
   isUrlValid,
 } from '../utils/validator.js';
 import ApiError from '../utils/ApiError.js';
+import upload from '../utils/upload.js';
+import uploadCloud from '../utils/uploadCloud.js';
 
 const usersRoute = express.Router();
 
@@ -17,9 +19,8 @@ usersRoute
   .get((req, res) => {
     res.json(usersData);
   })
-  .post((req, res) => {
+  .post(upload.single('avatar'), async (req, res) => {
     const { first_name, last_name, email, mobile, avatar } = req.body;
-    console.log(req.body);
     if (
       first_name &&
       isNameValid(first_name) &&
@@ -32,7 +33,17 @@ usersRoute
     ) {
       const id = usersData[usersData.length - 1].id + 1;
       const user = { id, first_name, last_name, email, mobile };
-      if (avatar && isUrlValid(avatar)) user.avatar = avatar;
+      if (avatar) {
+        try {
+          const cloudUrl = await uploadCloud(req.file.path);
+          user.avatar = cloudUrl;
+        } catch (error) {
+          console.error('Error uploading file to Cloudinary: ', error);
+          return res
+            .status(500)
+            .json(new ApiError('Error uploading file', 500));
+        }
+      }
       usersData.push(user);
       fs.writeFile('db/users.json', JSON.stringify(usersData), (err) => {
         if (err) {
