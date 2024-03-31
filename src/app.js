@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import apiRoute from './routes/apiRoute.js';
 import route from './routes/route.json' assert { type: 'json' };
 import removeExpressHeader from './middlewares/removeExpressHeader.js';
@@ -13,6 +14,12 @@ import {
 const app = express();
 
 // Middlewares
+app.use(
+  cors({
+    origin: '*',
+    methods: 'GET,POST',
+  })
+);
 // Parse URL-encoded bodies (forms)
 app.use(express.urlencoded({ extended: false }));
 // Parse JSON bodies (API requests)
