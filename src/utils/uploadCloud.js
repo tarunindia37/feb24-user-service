@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import { pathRegex } from '../constants.js';
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -6,7 +7,7 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET,
 });
 
-const uploadCloud = async (file) => {
+export const uploadCloud = async (file) => {
   return new Promise((resolve, reject) => {
     // Upload file to Cloudinary
     cloudinary.uploader.upload(file, (error, result) => {
@@ -20,4 +21,19 @@ const uploadCloud = async (file) => {
   });
 };
 
-export default uploadCloud;
+export const deleteFromCloud = async (fileUrl) => {
+  try {
+    const match = fileUrl.match(pathRegex);
+    if (match && match.length > 1) {
+      const fileName = match[1];
+      if (fileName) {
+        // Call Cloudinary's destroy method to delete the image
+        const result = await cloudinary.uploader.destroy(fileName);
+        return result;
+      }
+    }
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    return null;
+  }
+};

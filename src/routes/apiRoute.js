@@ -1,7 +1,7 @@
 import express from 'express';
 import route from './route.json' assert { type: 'json' };
-import weatherRoute from './weatherRoute.js';
-import usersRoute from './usersRoute.js';
+import weatherRoute from './weather.js';
+import usersRoute from './users.js';
 
 const apiRoute = express.Router();
 

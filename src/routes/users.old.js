@@ -1,6 +1,6 @@
 import express from 'express';
 import fs from 'fs';
-import usersData from './../../db/users.json' assert { type: 'json' };
+import usersData from '../../db/users.json' assert { type: 'json' };
 import route from './route.json' assert { type: 'json' };
 import {
   isEmailValid,
@@ -11,7 +11,6 @@ import {
 import ApiError from '../utils/ApiError.js';
 import upload from '../utils/upload.js';
 import uploadCloud from '../utils/uploadCloud.js';
-import User from '../models/user.js';
 
 const usersRoute = express.Router();
 
@@ -46,25 +45,15 @@ usersRoute
         }
       }
       usersData.push(user);
-      // fs.writeFile('db/users.json', JSON.stringify(usersData), (err) => {
-      //   if (err) {
-      //     console.log(err);
-      //     return res
-      //       .status(500)
-      //       .json(new ApiError('File operation failed', 500));
-      //   }
-      //   res.status(201).json(user);
-      // });
-      try {
-        const newUser = new User(user);
-        const result = await newUser.save();
-        //console.log('result ===>>', result);
-        res.status(201).json(result);
-      } catch (error) {
-        console.error('Error in DB saving: ', error);
-        return res.status(500).json(new ApiError('Error in DB saving', 500));
-      }
-      //}
+      fs.writeFile('db/users.json', JSON.stringify(usersData), (err) => {
+        if (err) {
+          console.log(err);
+          return res
+            .status(500)
+            .json(new ApiError('File operation failed', 500));
+        }
+        res.status(201).json(user);
+      });
     } else {
       res
         .status(400)
