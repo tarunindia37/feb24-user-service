@@ -4,5 +4,8 @@
     "WEATHER": "/weather",
     "USERS": "/users",
     "LOGS": "/logs",
-    "UPLOADS": "/uploads"
+    "UPLOADS": "/uploads",
+    "SHOW_USERS": "/show-users",
+    "LOGIN": "/login",
+    "SIGNUP": "/sign-up"
 }

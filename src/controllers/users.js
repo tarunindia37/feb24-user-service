@@ -113,3 +113,10 @@ export const updateUserById = async (req, res) => {
     res.status(404).json(new ApiError('No Data to modify', 404));
   }
 };
+
+export const displayUsers = async (req, res) => {
+  // Fetch the data from DB
+  const users = await User.find({});
+  // Generate the dynamic html
+  res.render('users', { users });
+};

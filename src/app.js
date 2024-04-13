@@ -10,8 +10,13 @@ import {
   PUBLIC_FOLDER_PATH,
   UPLOADS_FOLDER_PATH,
 } from './constants.js';
+import appPages from './routes/pageRoute.js';
 
 const app = express();
+
+// Set EJS as the view engine
+app.set('view engine', 'ejs');
+app.set('views', 'src/views');
 
 // Middlewares
 app.use(
@@ -36,5 +41,6 @@ app.use(route.UPLOADS, express.static(UPLOADS_FOLDER_PATH));
 
 // Routes
 app.use(route.API, apiRoute);
+app.use(route.ROOT, appPages);
 
 export default app;

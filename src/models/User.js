@@ -26,6 +26,10 @@ const userSchema = new Schema(
       index: true,
       match: emailRegex,
     },
+    password: {
+      type: String,
+      required: true,
+    },
     mobile: {
       type: String,
       trim: true,
