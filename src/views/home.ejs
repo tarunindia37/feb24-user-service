@@ -29,7 +29,11 @@
                 </li>
             </ul>
             <span class="navbar-text">
-                Hi, Guest
+                <% if(first_name){ %>
+                    Hi, <%= first_name %>
+                <% } else{ %>  
+                    Hi, Guest
+                <% } %>
             </span>
         </div>
     </nav>

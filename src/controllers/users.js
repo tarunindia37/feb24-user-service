@@ -19,7 +19,7 @@ export const getUsers = async (req, res) => {
 };
 
 export const setUser = async (req, res) => {
-  const { first_name, last_name, email, mobile, avatar } = req.body;
+  const { first_name, last_name, email, password, mobile, avatar } = req.body;
   if (
     first_name &&
     isNameValid(first_name) &&
@@ -27,10 +27,18 @@ export const setUser = async (req, res) => {
     isNameValid(last_name) &&
     email &&
     isEmailValid(email) &&
+    password &&
+    password.length >= 5 &&
     mobile &&
     isMobileValid(mobile)
   ) {
-    const user = { first_name, last_name, email, mobile };
+    const user = {
+      first_name,
+      last_name,
+      email,
+      mobile,
+      password,
+    };
     if (avatar) {
       try {
         const cloudUrl = await uploadCloud(req.file.path);
@@ -43,7 +51,9 @@ export const setUser = async (req, res) => {
     try {
       const newUser = new User(user);
       const result = await newUser.save();
-      res.status(201).json(result);
+      const saveUser = result.toObject();
+      delete saveUser.password;
+      res.status(201).json(saveUser);
     } catch (err) {
       console.error('Error in DB saving: ', err);
       return res.status(500).json(new ApiError('Error in DB saving', 500));

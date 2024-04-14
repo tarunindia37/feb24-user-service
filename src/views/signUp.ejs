@@ -39,7 +39,17 @@
         <div class="col-md-6">
         <div class="card">
             <div class="card-body">
-            <form action="/api/users" method="POST" enctype="multipart/form-data">
+                <% if(isSuccess){ %>
+                    <div class="alert alert-success" role="alert">
+                        User is created successfully, Please login.
+                    </div>
+                <% } %>
+                <% if(isError){ %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= errorMsg || 'Something went wrong, Please try later.' %> 
+                    </div>
+                <% } %>
+            <form method="POST" enctype="multipart/form-data">
 
             <label class="form-label" for="email">Email</label><br />
             <input class="form-control" type="email" id="email" name="email" required />

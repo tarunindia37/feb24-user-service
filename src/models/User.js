@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose';
+import bcrypt from 'bcrypt';
 import { emailRegex } from '../constants.js';
 
 const userSchema = new Schema(
@@ -41,6 +42,18 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+  const user = this;
+  if (!user.isModified('password')) return next();
+  const hashedPassword = await bcrypt.hash(
+    user.password,
+    +process.env.HASH_SALT
+  );
+  user.password = hashedPassword;
+  next();
+});
 
 // Create Model (Class)
 const User = mongoose.model('User', userSchema);

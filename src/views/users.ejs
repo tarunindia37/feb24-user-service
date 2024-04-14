@@ -58,7 +58,13 @@
                         <td><%= user.last_name %></td>
                         <td><%= user.email %></td>
                         <td><%= user.mobile %></td>
-                        <td> <img src="<%= user.avatar %>" alt="user-image" height="50" width="50"/></td>
+                        <td>
+                            <% if(user.avatar){ %>
+                                <img src="<%= user.avatar %>" alt="user-image" height="50" width="50"/>
+                            <% } else{ %>  
+                                <img src="/imgs/profile_placeholder.jpg" alt="user-image" height="50" width="50"/>
+                            <% } %>
+                        </td>
                     </tr>
                 <% }); %>
             </tbody>

@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import session from 'express-session';
 import apiRoute from './routes/apiRoute.js';
 import route from './routes/route.json' assert { type: 'json' };
 import removeExpressHeader from './middlewares/removeExpressHeader.js';
@@ -11,12 +12,22 @@ import {
   UPLOADS_FOLDER_PATH,
 } from './constants.js';
 import appPages from './routes/pageRoute.js';
+import { isLogin } from './middlewares/isLogin.js';
 
 const app = express();
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    // resave: false,
+    // saveUninitialized: false,
+    // cookie: { secure: true },
+  })
+);
 
 // Middlewares
 app.use(
@@ -33,6 +44,7 @@ app.use(express.json());
 // Custom middlewares
 app.use(logger(LOGGER_PATH));
 app.use(removeExpressHeader());
+app.use(isLogin());
 
 // Middlewares to server static files
 app.use(express.static(PUBLIC_FOLDER_PATH));
