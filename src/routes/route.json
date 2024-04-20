@@ -7,5 +7,6 @@
     "UPLOADS": "/uploads",
     "SHOW_USERS": "/show-users",
     "LOGIN": "/login",
-    "SIGNUP": "/sign-up"
+    "SIGNUP": "/sign-up",
+    "LOGOUT": "/logout"
 }

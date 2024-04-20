@@ -19,19 +19,31 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
+                <% if(!isLogin){ %>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/show-users">All Users</a>
                 </li>
+                <% } else { %>  
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/sign-up">Signup</a>
                 </li>
+                <% } %>
             </ul>
             <span class="navbar-text">
-                Hi, Guest
+                <% if(first_name){ %>
+                    Hi, <%= first_name %>
+                <% } else { %>  
+                    Hi, Guest
+                <% } %>
             </span>
+            <% if(isLogin){ %>
+            <span>
+                <a class="nav-link" aria-current="page" href="/logout">Logout</a>
+            </span>
+            <% } %>
         </div>
     </nav>
     <div class="container mt-2">

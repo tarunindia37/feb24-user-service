@@ -4,14 +4,17 @@ import route from './route.json' assert { type: 'json' };
 import upload from '../utils/upload.js';
 import { signup } from '../controllers/signup.js';
 import { login } from '../controllers/login.js';
+import isPrivatePage from '../middlewares/isPrivatePage.js';
 
 const pageRoute = express.Router();
 
-pageRoute.get(route.SHOW_USERS, displayUsers);
+// private page
+pageRoute.get(route.SHOW_USERS, isPrivatePage(), displayUsers);
 
 pageRoute
   .route(route.LOGIN)
   .get((req, res) => {
+    if (req.isLogin) return res.redirect(route.ROOT);
     return res.render('login', {
       isSuccess: false,
       isError: false,
@@ -23,6 +26,7 @@ pageRoute
 pageRoute
   .route(route.SIGNUP)
   .get((req, res) => {
+    if (req.isLogin) return res.redirect(route.ROOT);
     return res.render('signUp', {
       isSuccess: false,
       isError: false,
@@ -32,8 +36,15 @@ pageRoute
   .post(upload.single('avatar'), signup);
 
 pageRoute.get(route.ROOT, (req, res) => {
-  console.log('====>>>', req?.user);
-  return res.render('home', { first_name: req?.user?.first_name });
+  return res.render('home', {
+    first_name: req?.user?.first_name,
+    isLogin: req?.isLogin,
+  });
+});
+
+pageRoute.get(route.LOGOUT, (req, res) => {
+  req.session._id = null;
+  res.redirect(route.LOGIN);
 });
 
 export default pageRoute;

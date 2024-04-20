@@ -128,5 +128,9 @@ export const displayUsers = async (req, res) => {
   // Fetch the data from DB
   const users = await User.find({});
   // Generate the dynamic html
-  res.render('users', { users });
+  res.render('users', {
+    users,
+    first_name: req?.user?.first_name,
+    isLogin: req?.isLogin,
+  });
 };
