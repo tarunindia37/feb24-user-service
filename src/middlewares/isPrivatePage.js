@@ -1,4 +1,4 @@
-import route from './../routes/route.json' assert { type: 'json' };
+import route from '../routes/route.json' assert { type: 'json' };
 
 const isPrivatePage = () => {
   return (req, res, next) => {

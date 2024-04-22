@@ -19,7 +19,7 @@
                 <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="/">Home</a>
                 </li>
-                <% if(!isLogin){ %>
+                <% if(isLogin){ %>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/show-users">All Users</a>
                 </li>
@@ -40,7 +40,7 @@
                 <% } %>
             </span>
             <% if(isLogin){ %>
-            <span>
+            <span class="navbar-text ms-3">
                 <a class="nav-link" aria-current="page" href="/logout">Logout</a>
             </span>
             <% } %>
